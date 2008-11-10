@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed>
+  <update>
+    <token>39180875991</token>
+    <poll_interval>40</poll_interval>
+    <incomplete>False</incomplete>
+  </update>
+  <entry>
+    <updated>2008-11-03T19:43:09Z</updated>
+    <via>
+      <url>http://github.com/</url>
+      <name>GitHub</name>
+    </via>
+    <service>
+      <profileUrl>http://friendfeed.com/</profileUrl>
+      <iconUrl>http://chan.friendfeed.com/static/images/icons/internal.png?v=e471e9afdf04ae568dcbddb5584fc6c0</iconUrl>
+      <id>internal</id>
+      <entryType>link</entryType>
+      <name>FriendFeed</name>
+    </service>
+    <title>Ken Sheppardson just committed a change to enjit on GitHub</title>
+    <is_new>True</is_new>
+    <comment>
+      <body>dd3ed5a5421e465e2e2dee8130032eefaff29bb8 - Fix for UnicodeEncodeError</body>
+      <via>
+        <url>http://github.com/</url>
+        <name>GitHub</name>
+      </via>
+      <is_new>True</is_new>
+      <user>
+        <profileUrl>http://chan.friendfeed.com/kshep</profileUrl>
+        <nickname>kshep</nickname>
+        <id>46958b7d-4bde-4890-8842-8cc33e8f55bd</id>
+        <name>Ken Sheppardson</name>
+      </user>
+      <date>2008-11-03T19:43:09Z</date>
+      <id>56ce52c7-a156-49ec-a826-128107e5a936</id>
+    </comment>
+    <comment>
+      <body>another comment</body>
+      <via>
+        <url>http://github.com/2</url>
+        <name>GitHub 2</name>
+      </via>
+      <is_new>True</is_new>
+      <user>
+        <profileUrl>http://chan.friendfeed.com/dlsspy</profileUrl>
+        <nickname>dlsspy</nickname>
+        <id>46958b7d-4bde-4890-8842-8cc33e8f55bx</id>
+        <name>Dustin Sallings</name>
+      </user>
+      <date>2008-11-03T20:43:09Z</date>
+      <id>56ce52c7-a156-49ec-a826-128107e5a93x</id>
+    </comment>
+    <link>http://github.com/kshep/enjit/commit/dd3ed5a5421e465e2e2dee8130032eefaff29bb8</link>
+    <anonymous>False</anonymous>
+    <published>2008-11-03T19:43:09Z</published>
+    <hidden>False</hidden>
+    <id>0d751d07-a439-49a5-9c26-afda3d1fdea3</id>
+    <user>
+      <profileUrl>http://chan.friendfeed.com/kshep</profileUrl>
+      <nickname>kshep</nickname>
+      <id>46958b7d-4bde-4890-8842-8cc33e8f55bd</id>
+      <name>Ken Sheppardson</name>
+    </user>
+  </entry>
+</feed>
