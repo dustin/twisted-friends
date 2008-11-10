@@ -57,8 +57,7 @@ class RealtimeLongPoll(object):
         # Convert this from unicode
         url = str(URL_BASE + self.ff_token)
         
-        f = ffxml.Feed(self)
-        return getPageWithHeaders(url, f, self,
+        return getPageWithHeaders(url, ffxml.Feed(self), self,
             headers=makeAuthHeader(self.username, self.authkey)
             ).addErrback(self.onError)
 
