@@ -7,7 +7,7 @@ from twisted.web import client
 
 import ffxml
 
-URL_BASE="http://chan.friendfeed.com/api/updates/home?format=xml&token="
+URL_BASE="http://chan.friendfeed.com/api/updates"
 
 class DownloadWithHeadersFactory(client.HTTPDownloader):
 
@@ -45,7 +45,7 @@ def makeAuthHeader(username, authkey):
 class RealtimeLongPoll(object):
 
     def __init__(self, username, authkey, msg_handler, path="/home"):
-        self.ff_token = ""
+        self.ff_token = None
         self.last_update = None
         self.username = username
         self.authkey = authkey
@@ -56,8 +56,11 @@ class RealtimeLongPoll(object):
         log.msg("RealtimeLongPoll iterating")
 
         # Convert this from unicode
-        url = str(URL_BASE + self.path + "?format=xml&token="
-            + self.ff_token)
+        if self.ff_token:
+            url = str(URL_BASE + self.path + "?format=xml&token="
+                + self.ff_token)
+        else:
+            url = URL_BASE + "?format=xml"
         
         return getPageWithHeaders(url, ffxml.Feed(self), self,
             headers=makeAuthHeader(self.username, self.authkey)
