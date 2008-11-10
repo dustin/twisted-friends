@@ -46,7 +46,6 @@ class RealtimeLongPoll(object):
 
     def __init__(self, username, authkey, msg_handler, path="/home"):
         self.ff_token = None
-        self.last_update = None
         self.username = username
         self.authkey = authkey
         self.msg_handler = msg_handler
