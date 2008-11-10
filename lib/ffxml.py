@@ -47,6 +47,11 @@ class BaseXMLHandler(object):
     def __repr__(self):
         return "{%s %s}" % (self.tag_name, self.__dict__)
 
+class Room(BaseXMLHandler):
+
+    SIMPLE_PROPS = ['url', 'nickname', 'id', 'name']
+    tag_name = 'room'
+
 class Via(BaseXMLHandler):
 
     SIMPLE_PROPS = ['url', 'name']
@@ -73,7 +78,7 @@ class Entry(BaseXMLHandler):
     SIMPLE_PROPS = ['updated', 'title', 'is_new', 'link', 'anonymous',
         'published', 'hidden', 'id']
     COMPLEX_PROPS = {'via': Via, 'service': Service, 'comment': Comment,
-        'user': User}
+        'user': User, 'room': Room}
 
     def __init__(self):
         super(Entry, self).__init__()

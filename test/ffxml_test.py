@@ -178,5 +178,28 @@ class XMLParserTest(unittest.TestCase):
         ff.write(d)
         f.close()
 
+    def testRoom(self):
+        ts=self
+        class D(object):
+            def gotUpdate(self, token, poll_interval, incomplete):
+                raise "Didn't expect an update."
+            def gotEntry(self, e):
+                if e.id == 'f1b516ab-55dc-5d60-44d7-676f7dff737c':
+                    ts.assertEquals("True", e.anonymous)
+                    ts.assertEquals("blogsunited", e.room.nickname)
+                    ts.assertEquals("BlogsUnited", e.room.name)
+                    ts.assertEquals("http://friendfeed.com/rooms/blogsunited",
+                        e.room.url)
+                    ts.assertEquals("fc1e3d84-07a7-4d7d-8074-453bf16c17a5",
+                        e.room.id)
+        ff = ffxml.Feed(D())
+
+        f=open("test/public-sample.xml")
+        d=f.read()
+        f.close()
+
+        ff.write(d)
+        f.close()
+
 if __name__ == '__main__':
     unittest.main()
