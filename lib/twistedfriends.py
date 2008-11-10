@@ -1,5 +1,6 @@
 import time
 import base64
+import urllib
 
 from twisted.python import log
 from twisted.internet import reactor
@@ -36,8 +37,9 @@ def getPageWithHeaders(url, file, headerCallback, contextFactory=None,
         reactor.connectTCP(host, port, factory)
     return factory.deferred
 
-def makeAuthHeader(username, authkey):
-    headers = {}
+def makeAuthHeader(username, authkey, headers=None):
+    if not headers:
+        headers = {}
     authorization = base64.encodestring('%s:%s' % (username, authkey))[:-1]
     headers['Authorization'] = "Basic %s" % authorization
     return headers
@@ -83,3 +85,26 @@ class RealtimeLongPoll(object):
 def validateCredentials(username, authkey):
     return client.getPage("http://friendfeed.com/api/validate",
         headers=makeAuthHeader(username, authkey))
+
+def __urlencode(h):
+    rv = []
+    for k,v in h.iteritems():
+        rv.append('%s=%s' %
+            (urllib.quote(k.encode("utf-8")), urllib.quote(v.encode("utf-8"))))
+    return '&'.join(rv)
+
+def __post(user, remotekey, path, args):
+    h = {'Content-Type': 'application/x-www-form-urlencoded'}
+    return client.getPage("http://friendfeed.com%s" % path, method='POST',
+        postdata=__urlencode(args),
+        headers=makeAuthHeader(user, remotekey, h))
+
+def publish_message(user, remotekey, message, via=None):
+    args = {'title': message}
+    if via: args['via'] = via
+    return __post(user, remotekey, '/api/share', args)
+
+def add_comment(user, remotekey, entry_id, body, via=None):
+    args = {'entry': entry_id, 'body': body}
+    if via: args['via'] = via
+    return __post(user, remotekey, '/api/comment', args)
