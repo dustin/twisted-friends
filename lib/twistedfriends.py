@@ -44,18 +44,20 @@ def makeAuthHeader(username, authkey):
 
 class RealtimeLongPoll(object):
 
-    def __init__(self, username, authkey, msg_handler):
+    def __init__(self, username, authkey, msg_handler, path="/home"):
         self.ff_token = ""
         self.last_update = None
         self.username = username
         self.authkey = authkey
         self.msg_handler = msg_handler
+        self.path = path
 
     def __call__(self):
         log.msg("RealtimeLongPoll iterating")
 
         # Convert this from unicode
-        url = str(URL_BASE + self.ff_token)
+        url = str(URL_BASE + self.path + "?format=xml&token="
+            + self.ff_token)
         
         return getPageWithHeaders(url, ffxml.Feed(self), self,
             headers=makeAuthHeader(self.username, self.authkey)
