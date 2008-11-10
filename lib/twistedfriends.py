@@ -36,6 +36,12 @@ def getPageWithHeaders(url, file, headerCallback, contextFactory=None,
         reactor.connectTCP(host, port, factory)
     return factory.deferred
 
+def makeAuthHeader(username, authkey):
+    headers = {}
+    authorization = base64.encodestring('%s:%s' % (username, authkey))[:-1]
+    headers['Authorization'] = "Basic %s" % authorization
+    return headers
+
 class RealtimeLongPoll(object):
 
     def __init__(self, username, authkey, msg_handler):
@@ -46,19 +52,14 @@ class RealtimeLongPoll(object):
         self.msg_handler = msg_handler
 
     def __call__(self):
-        headers = {}
-
         log.msg("RealtimeLongPoll iterating")
-
-        authorization = base64.encodestring('%s:%s' %
-            (self.username, self.authkey))[:-1]
-        headers['Authorization'] = "Basic %s" % authorization
 
         # Convert this from unicode
         url = str(URL_BASE + self.ff_token)
         
         f = ffxml.Feed(self)
-        return getPageWithHeaders(url, f, self, headers=headers
+        return getPageWithHeaders(url, f, self,
+            headers=makeAuthHeader(self.username, self.authkey)
             ).addErrback(self.onError)
 
     def gotHeaders(self, headers):
