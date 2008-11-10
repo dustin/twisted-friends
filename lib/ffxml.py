@@ -73,22 +73,32 @@ class Comment(BaseXMLHandler):
     COMPLEX_PROPS = {'via': Via, 'user': User}
     tag_name = 'comment'
 
+class Like(BaseXMLHandler):
+
+    SIMPLE_PROPS = ['date']
+    COMPLEX_PROPS = {'user': User}
+    tag_name = 'like'
+
 class Entry(BaseXMLHandler):
 
     SIMPLE_PROPS = ['updated', 'title', 'is_new', 'link', 'anonymous',
         'published', 'hidden', 'id']
     COMPLEX_PROPS = {'via': Via, 'service': Service, 'comment': Comment,
-        'user': User, 'room': Room}
+        'user': User, 'room': Room, 'like': Like}
 
     def __init__(self):
         super(Entry, self).__init__()
         self.comments=[]
+        self.likes=[]
 
     def gotTagEnd(self, name, data):
         super(Entry, self).gotTagEnd(name, data)
         if name == 'comment':
             self.comments.append(self.comment)
             del self.comment
+        elif name == 'like':
+            self.likes.append(self.like)
+            del self.like
 
     tag_name = 'entry'
 

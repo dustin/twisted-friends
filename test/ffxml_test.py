@@ -201,5 +201,29 @@ class XMLParserTest(unittest.TestCase):
         ff.write(d)
         f.close()
 
+    def testLike(self):
+        ts=self
+        class D(object):
+            def gotUpdate(self, token, poll_interval, incomplete):
+                raise "Didn't expect an update."
+            def gotEntry(self, e):
+                if e.id == 'd13b2be1-4964-44b1-bd9b-a713dc834328':
+                    ts.assertEquals("False", e.anonymous)
+                    ts.assertEquals("2008-11-10T04:29:08Z", e.likes[0].date)
+                    ts.assertEquals("geekandahalf", e.likes[0].user.nickname)
+                    ts.assertEquals("Derrick", e.likes[0].user.name)
+                    ts.assertEquals("http://friendfeed.com/geekandahalf",
+                        e.likes[0].user.profileUrl)
+                    ts.assertEquals("0b04366e-7205-11dd-9e66-003048343a40",
+                        e.likes[0].user.id)
+        ff = ffxml.Feed(D())
+
+        f=open("test/public-sample.xml")
+        d=f.read()
+        f.close()
+
+        ff.write(d)
+        f.close()
+
 if __name__ == '__main__':
     unittest.main()
