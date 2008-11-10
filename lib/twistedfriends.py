@@ -61,7 +61,7 @@ class RealtimeLongPoll(object):
                 + self.ff_token)
         else:
             url = URL_BASE + "?format=xml"
-        
+
         return getPageWithHeaders(url, ffxml.Feed(self), self,
             headers=makeAuthHeader(self.username, self.authkey)
             ).addErrback(self.onError)
