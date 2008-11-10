@@ -80,3 +80,7 @@ class RealtimeLongPoll(object):
 
     def onError(self, err):
         raise err
+
+def validateCredentials(username, authkey):
+    return client.getPage("http://friendfeed.com/api/validate",
+        headers=makeAuthHeader(username, authkey))
