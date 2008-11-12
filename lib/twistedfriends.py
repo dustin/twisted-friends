@@ -106,7 +106,8 @@ def __urlencode(h):
             (urllib.quote(k.encode("utf-8")), urllib.quote(v.encode("utf-8"))))
     return '&'.join(rv)
 
-def __post(user, remotekey, path, args):
+def __post(user, remotekey, path, args={}):
+    print "Posting %s to %s for %s/%s" % (str(args), path, user, remotekey)
     h = {'Content-Type': 'application/x-www-form-urlencoded'}
     return client.getPage("http://friendfeed.com%s" % path, method='POST',
         postdata=__urlencode(args),
@@ -127,3 +128,24 @@ def like(user, remotekey, entry_id):
 
 def unlike(user, remotekey, entry_id):
     return __post(user, remotekey, '/api/like/delete', {'entry': entry_id})
+
+def subscribe(user, remotekey, apikey, target, subtype='user'):
+    """Subscribe to something.
+
+    subtype may be one of
+     - user
+     - room
+    """
+    return __post(user, remotekey, '/api/%s/%s/subscribe' % (subtype, target),
+        {'apikey': apikey})
+
+def unsubscribe(user, remotekey, apikey, target, subtype='user'):
+    """Unsubscribe from something.
+
+    subtype may be one of
+     - user
+     - room
+    """
+    return __post(user, remotekey,
+        '/api/%s/%s/subscribe?unsubscribe=1' % (subtype, target),
+        {'apikey': apikey})
