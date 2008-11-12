@@ -111,3 +111,6 @@ def add_comment(user, remotekey, entry_id, body, via=None):
 
 def like(user, remotekey, entry_id):
     return __post(user, remotekey, '/api/like', {'entry': entry_id})
+
+def unlike(user, remotekey, entry_id):
+    return __post(user, remotekey, '/api/like/delete', {'entry': entry_id})
