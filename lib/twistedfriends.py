@@ -108,3 +108,6 @@ def add_comment(user, remotekey, entry_id, body, via=None):
     args = {'entry': entry_id, 'body': body}
     if via: args['via'] = via
     return __post(user, remotekey, '/api/comment', args)
+
+def like(user, remotekey, entry_id):
+    return __post(user, remotekey, '/api/like', {'entry': entry_id})
