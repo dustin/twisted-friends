@@ -5,7 +5,6 @@ Twisted friends is a [friendfeed](http://friendfeed.com/) API for
 
 # Example Usage
 
-See
-[example/ffwatch.py](/dustin/twisted-friends/tree/master/example/ffwatch.py)
-for an example commandline tool that does long-polls on your home timeline,
-printing out new events as they come to your console.
+See the
+[example/](/dustin/twisted-friends/tree/master/example/) directory
+for example commandline tools that exercise various parts of the API.
