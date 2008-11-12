@@ -82,6 +82,19 @@ class RealtimeLongPoll(object):
     def onError(self, err):
         raise err
 
+def url_info(url, cb, user=None, remotekey=None, subscribed=False):
+    """Get entries pointing to the given URL.
+
+    cb is a callback whose gotEntry method will be called with every entry."""
+    p = {'url': url}
+    headers = {}
+    if user and remotekey:
+        headers = makeAuthHeader(user, remotekey)
+        if subscribed: p['subscribed'] = "1"
+    return client.downloadPage(
+        'http://friendfeed.com/api/feed/url?format=xml&%s' % __urlencode(p),
+        ffxml.Feed(cb), headers=headers)
+
 def validateCredentials(username, authkey):
     return client.getPage("http://friendfeed.com/api/validate",
         headers=makeAuthHeader(username, authkey))
