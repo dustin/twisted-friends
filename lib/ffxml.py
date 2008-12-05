@@ -148,13 +148,8 @@ class Feed(sux.XMLParser):
         self.data.append(data)
 
     def gotEntityReference(self, data):
-        if data == 'quot':
-            self.data.append('"')
-        elif data == 'lt':
-            self.data.append('&lt;')
-        elif data == 'gt':
-            self.data.append('&gt;')
-        elif data == 'amp':
-            self.data.append('&amp;')
+        e = {'quot': '"', 'lt': '&lt;', 'gt': '&gt;', 'amp': '&amp;'}
+        if e.has_key(data):
+            self.data.append(e[data])
         else:
             print "Unhandled entity reference: ", data
