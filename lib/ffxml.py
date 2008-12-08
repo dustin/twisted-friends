@@ -41,6 +41,7 @@ class BaseXMLHandler(object):
                 self.current_ob = None
         elif name == self.tag_name:
             self.done = True
+            del self.current_ob
         elif name in self.SIMPLE_PROPS:
             self.__dict__[name] = data
 
@@ -140,7 +141,9 @@ class Feed(sux.XMLParser):
                 self.incomplete)
         elif name == 'entry':
             self.currentEntry.done = True
+            del self.currentEntry.current_ob
             self.delegate.gotEntry(self.currentEntry)
+            self.currentEntry = None
         elif self.currentEntry:
             self.currentEntry.gotTagEnd(name, ''.join(self.data).decode('utf8'))
 
